@@ -21,13 +21,13 @@
                 const data = await response.json()
                 return data.token
             }
-            
+            const body = {}
             async function watson(){
                 window.watsonAssistantChatOptions = {
                 integrationID: "", // The ID of this integration.
                 region: "us-south", // The region your integration is hosted in.
                 serviceInstanceID: "", // The ID of your service instance.
-                identityToken: await getToken(),
+                identityToken: await getToken(body),
                 openChatByDefault: true, // Whether to open the chat window by default.
                 showLauncher: true, // Whether to show the chat launcher.
                 hideCloseButton: true, // Whether to hide the close button.
@@ -36,7 +36,7 @@
                     instance.on({ 
                         type: 'identityTokenExpired', 
                         handler: async function(event) {                           
-                            event.identityToken = await getToken()
+                            event.identityToken = await getToken(body)
                         }
                     });
                     await instance.updateLocale('pt-br');
